@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>gambriel182</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: Inter, sans-serif;
+  background: #0b0c10;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* CLOCK */
+.clock {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 1px;
+
+  color: rgba(255,255,255,0.9);
+
+  padding: 6px 10px;
+  border-radius: 10px;
+
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+
+  backdrop-filter: blur(10px);
+}
+
+/* CONTAINER */
+.container {
+  text-align: center;
+  width: 90%;
+  max-width: 420px;
+}
+
+.pfp {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  margin: auto;
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+h1 {
+  margin: 15px 0 5px;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.tag {
+  color: #aaa;
+  font-size: 13px;
+  margin-bottom: 25px;
+}
+
+/* LINKS */
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  padding: 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: white;
+
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+
+  transition: 0.2s ease;
+}
+
+.links a:hover {
+  background: rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+}
+
+.icon {
+  width: 18px;
+  height: 18px;
+  opacity: 0.95;
+}
+
+.slideshow {
+  margin-top: 20px;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  border-radius: 14px;
+  overflow: hidden;
+
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+.slideshow img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  opacity: 0;
+  transform: scale(1.06);
+  transition: opacity 0.7s ease, transform 1s ease;
+}
+
+.slideshow img.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ARROWS */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
+  color: white;
+
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(8px);
+
+  cursor: pointer;
+  transition: 0.2s;
+  user-select: none;
+}
+
+.nav:hover {
+  background: rgba(205,180,255,0.3);
+}
+
+.nav.left { left: 10px; }
+.nav.right { right: 10px; }
+
+/* DOTS */
+.dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.dot.active {
+  background: #cdb4ff;
+  transform: scale(1.4);
+  box-shadow: 0 0 10px rgba(205,180,255,0.6);
+}
+
+/* DOTS */
+.dots {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  transition: 0.3s;
+}
+
+.dot.active {
+  background: #cdb4ff;
+  transform: scale(1.3);
+  box-shadow: 0 0 10px rgba(205,180,255,0.6);
+}
+
+/* SPOTIFY */
+.spotify {
+  margin-top: 25px;
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0.95;
+}
+
+/* STATUS */
+.status {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #888;
+}
+</style>
+</head>
+
+<body>
+
+<!-- CLOCK -->
+<div class="clock" id="clock">00:00:00</div>
+
+<div class="container">
+
+  <img class="pfp" src="profile.png" alt="profile">
+
+  <h1>gambriel182</h1>
+  <div class="tag">Vibe Coder • Arch Linux user • NexusPT</div>
+
+  <!-- SLIDESHOW -->
+  <div class="slideshow">
+
+  <img src="img1.png" class="active">
+  <img src="img2.png">
+  <img src="img3.png">
+
+  <!-- NAV ARROWS -->
+  <div class="nav left" onclick="prevSlide()">‹</div>
+  <div class="nav right" onclick="nextSlide()">›</div>
+
+  <!-- DOTS -->
+  <div class="dots">
+    <span class="dot active" onclick="goToSlide(0)"></span>
+    <span class="dot" onclick="goToSlide(1)"></span>
+    <span class="dot" onclick="goToSlide(2)"></span>
+    <span class="dot" onclick="goToSlide(3)"></span>
+  </div>
+
+</div>
+
+  <!-- LINKS -->
+  <div class="links">
+
+    <a href="https://github.com/gambriel182">
+      <img class="icon"
+        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+        style="filter: invert(1);">
+      GitHub
+    </a>
+
+    <a href="https://nexuspt.eu">
+      <img class="icon" src="https://nexuspt.eu/favicon.ico">
+      NexusPT Website
+    </a>
+
+    <a href="https://github.com/caelestia-dots/caelestia">
+      <img class="icon"
+        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+        style="filter: invert(1);">
+      Dotfiles I use on Arch Linux
+    </a>
+
+  </div>
+
+  <!-- SPOTIFY -->
+  <div class="spotify">
+    <iframe
+      style="border-radius:12px"
+      src="https://open.spotify.com/embed/track/4cG7HUWYHBV6R6tHn1gxrl"
+      width="100%" height="152"
+      frameborder="0"
+      allowfullscreen=""
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+    </iframe>
+  </div>
+
+  <div class="status">
+    Software developer • Arch Linux • Building cool projects
+  </div>
+
+</div>
+
+<!-- AUDIO -->
+<audio id="bg" autoplay loop>
+  <source src="friday.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* CLOCK */
+function updateClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString('en-GB', { hour12: false });
+  document.getElementById('clock').innerText = time;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+/* MUSIC */
+const bg = document.getElementById("bg");
+window.addEventListener("load", () => {
+  bg.volume = 0.2;
+  bg.play().catch(() => {});
+});
+
+const slides = document.querySelectorAll(".slideshow img");
+const dots = document.querySelectorAll(".dot");
+
+let index = 0;
+let interval = null;
+
+function showSlide(i) {
+  slides.forEach((s, idx) => {
+    s.classList.toggle("active", idx === i);
+    dots[idx].classList.toggle("active", idx === i);
+  });
+  index = i;
+}
+
+function nextSlide() {
+  let next = (index + 1) % slides.length;
+  showSlide(next);
+}
+
+function prevSlide() {
+  let prev = (index - 1 + slides.length) % slides.length;
+  showSlide(prev);
+}
+
+function goToSlide(i) {
+  showSlide(i);
+  resetAutoplay();
+}
+
+/* autoplay */
+function startAutoplay() {
+  interval = setInterval(nextSlide, 3500);
+}
+
+function resetAutoplay() {
+  clearInterval(interval);
+  startAutoplay();
+}
+
+/* init */
+showSlide(0);
+startAutoplay();
+
+/* expose for HTML clicks */
+window.nextSlide = nextSlide;
+window.prevSlide = prevSlide;
+window.goToSlide = goToSlide;
+</script>
+
+</body>
+</html>
