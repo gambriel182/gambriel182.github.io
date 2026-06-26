@@ -1,393 +1,732 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-  <!-- DISCORD / SOCIAL PREVIEW -->
-<meta property="og:title" content="gambriel182">
-<meta property="og:description" content="Developer • Arch Linux user • NexusPT">
-<meta property="og:image" content="https://gambriel182.github.io/profile.png">
-<meta property="og:url" content="https://gambriel182.github.io">
-<meta property="og:type" content="website">
-
-<!-- Twitter (também usado pelo Discord em alguns casos) -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="gambriel182">
-<meta name="twitter:description" content="Developer • Arch Linux user • NexusPT">
-<meta name="twitter:image" content="https://gambriel182.github.io/profile.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>gambriel182</title>
+<meta property="og:title" content="gambriel182">
+<meta property="og:description" content="Developer • Arch Linux • Co-founder NexusPT">
+<meta property="og:image" content="https://gambriel182.github.io/profile.png">
+<meta property="og:url" content="https://gambriel182.github.io">
 <link rel="icon" type="image/x-icon" href="favicon.ico">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+
 body {
-  margin: 0;
-  font-family: Inter, sans-serif;
-  background: #0b0c10;
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  font-family:'Inter',-apple-system,sans-serif;
+  background:#06060a;
+  color:#f0f0f0;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
 }
 
-/* CLOCK */
-.clock {
-  position: fixed;
-  top: 18px;
-  right: 22px;
+::selection { background:rgba(120,90,255,0.25); }
 
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 1px;
-
-  color: rgba(255,255,255,0.9);
-
-  padding: 6px 10px;
-  border-radius: 10px;
-
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.06);
-
-  backdrop-filter: blur(10px);
+/* NAV */
+nav {
+  position:fixed; top:0; left:0; right:0;
+  padding:16px 44px;
+  display:flex; justify-content:space-between; align-items:center;
+  background:rgba(6,6,10,0.85);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  z-index:100;
+  border-bottom:1px solid rgba(255,255,255,0.04);
 }
 
-/* CONTAINER */
-.container {
-  text-align: center;
-  width: 90%;
-  max-width: 420px;
+nav .logo { font-size:14px; font-weight:700; color:#fff; letter-spacing:-0.3px; display:flex; align-items:center; gap:8px; }
+nav .logo span { color:#785aff; }
+
+nav ul { display:flex; gap:32px; list-style:none; }
+nav ul a { text-decoration:none; color:#555; font-size:12px; font-weight:500; transition:all .25s; letter-spacing:0.4px; position:relative; }
+nav ul a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1.5px; background:#785aff; transition:width .25s; }
+nav ul a:hover { color:#fff; }
+nav ul a:hover::after { width:100%; }
+
+/* HERO */
+.hero {
+  min-height:100vh;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  text-align:center;
+  padding:120px 24px 60px;
+  position:relative;
 }
 
-.pfp {
-  width: 96px;
-  height: 96px;
-  border-radius: 50%;
-  margin: auto;
-  object-fit: cover;
-  border: 2px solid rgba(255,255,255,0.1);
+.hero-glow {
+  position:absolute;
+  top:50%; left:50%;
+  width:600px; height:600px;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,rgba(120,90,255,0.06) 0%,transparent 70%);
+  pointer-events:none;
+  animation:glowPulse 6s ease-in-out infinite;
 }
 
-h1 {
-  margin: 15px 0 5px;
-  font-size: 24px;
-  font-weight: 700;
+@keyframes glowPulse {
+  0%,100% { transform:translate(-50%,-50%) scale(1); opacity:0.6; }
+  50% { transform:translate(-50%,-50%) scale(1.15); opacity:1; }
 }
 
-.tag {
-  color: #aaa;
-  font-size: 13px;
-  margin-bottom: 25px;
+.hero img {
+  width:84px; height:84px;
+  border-radius:50%;
+  object-fit:cover;
+  margin-bottom:24px;
+  border:2px solid rgba(255,255,255,0.04);
+  position:relative;
 }
 
-/* LINKS */
-.links {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 10px;
+.hero .hero-pfp { animation:heroIn .8s .1s both, float 4s ease-in-out .8s infinite; }
+
+@keyframes heroIn {
+  from { opacity:0; transform:scale(0.8) translateY(20px); }
+  to { opacity:1; transform:scale(1) translateY(0); }
 }
 
-.links a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-
-  padding: 12px;
-  border-radius: 12px;
-  text-decoration: none;
-  color: white;
-
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-
-  transition: 0.2s ease;
+@keyframes float {
+  0%,100% { transform:translateY(0); }
+  50% { transform:translateY(-6px); }
 }
 
-.links a:hover {
-  background: rgba(255,255,255,0.08);
-  transform: translateY(-2px);
+.hero h1 { font-size:52px; font-weight:700; color:#fff; letter-spacing:-1.5px; margin-bottom:8px; animation:heroIn .6s .3s both; }
+.hero h1 span { color:#785aff; }
+.hero p { font-size:15px; color:#555; max-width:380px; line-height:1.7; margin-bottom:32px; animation:heroIn .6s .5s both; }
+
+.hero .btns { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; position:relative; animation:heroIn .6s .7s both; }
+
+.hero .btns a {
+  text-decoration:none;
+  font-size:12px; font-weight:500;
+  color:#888;
+  padding:8px 20px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.04);
+  transition:all .25s;
+  display:flex; align-items:center; gap:6px;
 }
 
-.icon {
-  width: 18px;
-  height: 18px;
-  opacity: 0.95;
+.hero .btns a:nth-child(2) { transition-delay:.05s; }
+.hero .btns a:nth-child(3) { transition-delay:.1s; }
+
+.hero .btns a:hover { background:rgba(120,90,255,0.08); border-color:rgba(120,90,255,0.15); color:#fff; transform:translateY(-2px); }
+
+/* SECTIONS */
+section { padding:140px 44px; width:100%; }
+
+.section-inner { max-width:1100px; margin:0 auto; }
+
+.section-label {
+  font-size:11px; font-weight:600; color:#444;
+  text-transform:uppercase; letter-spacing:2px;
+  margin-bottom:24px;
 }
 
-.slideshow {
-  margin-top: 20px;
-  position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
+/* ABOUT */
+.about-wrap { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; }
 
-  border-radius: 14px;
-  overflow: hidden;
+.about-text p { font-size:15px; color:#777; line-height:1.9; margin-bottom:16px; }
+.about-text strong { color:#ddd; }
 
-  border: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+.about-stats {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:1px;
+  background:rgba(255,255,255,0.04);
+  border-radius:14px; overflow:hidden;
 }
 
-.slideshow img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.about-stats div { background:#06060a; padding:28px; text-align:center; }
+.about-stats .n { font-size:24px; font-weight:700; color:#785aff; display:block; }
+.about-stats .l { font-size:11px; color:#555; margin-top:4px; text-transform:uppercase; letter-spacing:1px; }
 
-  opacity: 0;
-  transform: scale(1.06);
-  transition: opacity 0.7s ease, transform 1s ease;
+/* NOW */
+.now-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+
+.now-card {
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.04);
+  border-radius:18px;
+  padding:32px;
+  transition:all .3s;
+  position:relative;
+  overflow:hidden;
 }
 
-.slideshow img.active {
-  opacity: 1;
-  transform: scale(1);
+.now-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg,transparent,#785aff,transparent);
+  opacity:0; transition:opacity .3s;
 }
 
-/* ARROWS */
-.nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+.now-card:hover::before { opacity:1; }
+.now-card:hover { background:rgba(255,255,255,0.03); border-color:rgba(255,255,255,0.08); transform:translateY(-3px); }
 
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 22px;
-  color: white;
-
-  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(8px);
-
-  cursor: pointer;
-  transition: 0.2s;
-  user-select: none;
+.now-card .now-logo {
+  width:44px; height:44px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.03);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:18px;
 }
 
-.nav:hover {
-  background: rgba(205,180,255,0.3);
+.now-card .now-logo img { width:24px; height:24px; object-fit:contain; }
+
+.now-card h3 { font-size:16px; font-weight:600; color:#fff; margin-bottom:6px; }
+.now-card h3 small { font-size:12px; font-weight:400; color:#666; margin-left:6px; }
+.now-card p { font-size:13px; color:#666; line-height:1.7; max-width:320px; }
+
+/* SLIDESHOW */
+.gallery-frame { max-width:880px; margin:0 auto; }
+
+.slideshow-wrap {
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  background:rgba(255,255,255,0.01);
+  border:1px solid rgba(255,255,255,0.06);
+  aspect-ratio:16/10;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
 }
 
-.nav.left { left: 10px; }
-.nav.right { right: 10px; }
-
-/* DOTS */
-.dots {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
+.slideshow-wrap .slides {
+  position:relative;
+  width:100%; height:100%;
 }
 
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.35);
-  cursor: pointer;
-  transition: 0.3s;
+.slideshow-wrap .slides img {
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity .9s ease, transform 1.1s ease;
+  transform:scale(1.08);
 }
 
-.dot.active {
-  background: #cdb4ff;
-  transform: scale(1.4);
-  box-shadow: 0 0 10px rgba(205,180,255,0.6);
+.slideshow-wrap .slides img.active { opacity:1; transform:scale(1); }
+
+.slideshow-wrap .s-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(6,6,10,0.4) 0%, transparent 40%);
+  pointer-events:none;
+  z-index:2;
 }
 
-/* DOTS */
-.dots {
-  position: absolute;
-  bottom: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 6px;
+.slideshow-wrap .s-count {
+  position:absolute; bottom:18px; left:20px;
+  font-size:12px; font-weight:500;
+  color:rgba(255,255,255,0.5);
+  letter-spacing:1px;
+  z-index:6;
+  font-variant-numeric:tabular-nums;
 }
 
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.3);
-  transition: 0.3s;
+.slideshow-wrap .s-nav {
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:40px; height:40px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:16px;
+  cursor:pointer; transition:all .3s;
+  user-select:none; z-index:5;
+  border:1px solid rgba(255,255,255,0.04);
+  opacity:0;
 }
 
-.dot.active {
-  background: #cdb4ff;
-  transform: scale(1.3);
-  box-shadow: 0 0 10px rgba(205,180,255,0.6);
+.slideshow-wrap:hover .s-nav { opacity:1; }
+.slideshow-wrap .s-nav:hover { background:rgba(120,90,255,0.3); border-color:rgba(120,90,255,0.2); transform:translateY(-50%) scale(1.05); }
+.slideshow-wrap .s-nav.prev { left:16px; }
+.slideshow-wrap .s-nav.next { right:16px; }
+
+.slideshow-wrap .s-dots {
+  position:absolute; bottom:16px; left:0; right:0;
+  display:flex; justify-content:center; gap:5px;
+  z-index:5;
 }
 
-/* SPOTIFY */
-.spotify {
-  margin-top: 25px;
-  border-radius: 12px;
-  overflow: hidden;
-  opacity: 0.95;
+.slideshow-wrap .s-dots span {
+  width:5px; height:5px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.2);
+  cursor:pointer; transition:all .45s cubic-bezier(.22,.61,.36,1);
 }
 
-/* STATUS */
-.status {
-  margin-top: 12px;
-  font-size: 12px;
-  color: #888;
+.slideshow-wrap .s-dots span.active { width:22px; border-radius:3px; background:#fff; }
+
+/* PROJECTS */
+.projects { display:flex; flex-direction:column; gap:1px; background:rgba(255,255,255,0.04); border-radius:14px; overflow:hidden; }
+
+.project {
+  background:#06060a;
+  padding:18px 24px;
+  display:flex; justify-content:space-between; align-items:center;
+  text-decoration:none;
+  transition:all .25s;
+}
+
+.project:hover { background:rgba(120,90,255,0.03); }
+.project:hover h4 { color:#785aff; }
+
+.project .info h4 { font-size:14px; font-weight:500; color:#fff; transition:color .2s; margin-bottom:2px; }
+.project .info p { font-size:12px; color:#555; }
+.project .meta { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+.project .lang { font-size:10px; color:#444; padding:2px 10px; border-radius:6px; background:rgba(255,255,255,0.03); }
+.project .arrow { color:#333; font-size:12px; transition:color .2s; }
+.project:hover .arrow { color:#785aff; }
+
+/* GITHUB */
+.github-imgs { display:flex; flex-wrap:wrap; gap:16px; justify-content:center; }
+.github-imgs img { max-width:100%; height:auto; border-radius:12px; border:1px solid rgba(255,255,255,0.04); }
+
+/* MUSIC */
+.music-card {
+  max-width:480px; width:100%;
+  border-radius:16px; overflow:hidden;
+  border:1px solid rgba(255,255,255,0.04);
+  background:rgba(255,255,255,0.01);
+  transition:border-color .3s;
+}
+
+.music-card:hover { border-color:rgba(29,185,84,0.2); }
+
+.music-card .head {
+  display:flex; align-items:center; gap:8px;
+  padding:14px 18px 0;
+  font-size:12px; color:#555; font-weight:500;
+}
+
+.music-card .head i { color:#1db954; font-size:13px; }
+.music-card iframe { width:100%; display:block; border-radius:0 0 16px 16px; }
+
+/* FOOTER */
+footer {
+  text-align:center;
+  padding:48px 24px 40px;
+  border-top:1px solid rgba(255,255,255,0.03);
+}
+
+footer .social { display:flex; justify-content:center; gap:24px; margin-bottom:16px; }
+footer .social a { color:#333; font-size:16px; transition:all .25s; }
+footer .social a:hover { color:#785aff; transform:translateY(-2px); }
+footer p { font-size:11px; color:#222; }
+
+/* PLAYER */
+.player {
+  position:fixed; bottom:28px; right:28px;
+  z-index:999;
+  display:flex; align-items:center; gap:10px;
+  background:rgba(18,18,24,0.92);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:30px;
+  padding:5px 5px 5px 16px;
+  box-shadow:0 8px 40px rgba(0,0,0,0.5);
+  cursor:pointer; user-select:none;
+  transition:all .3s;
+}
+
+.player:hover { border-color:rgba(120,90,255,0.15); box-shadow:0 8px 40px rgba(120,90,255,0.08); }
+
+.player .info { display:flex; flex-direction:column; line-height:1.2; }
+.player .info .name { font-size:11px; font-weight:500; color:#ddd; white-space:nowrap; max-width:80px; overflow:hidden; text-overflow:ellipsis; }
+.player .info .artist { font-size:9px; color:#555; }
+
+.player .bars { display:flex; align-items:center; gap:2px; height:16px; }
+.player .bars span { width:2px; background:#444; border-radius:2px; transition:all .3s; }
+
+.player.playing .bars span { background:#785aff; }
+.player.playing .bars span:nth-child(1) { animation:bar .5s ease-in-out infinite alternate; height:7px; }
+.player.playing .bars span:nth-child(2) { animation:bar .7s ease-in-out .1s infinite alternate; height:12px; }
+.player.playing .bars span:nth-child(3) { animation:bar .4s ease-in-out .2s infinite alternate; height:5px; }
+.player.playing .bars span:nth-child(4) { animation:bar .6s ease-in-out .15s infinite alternate; height:10px; }
+.player.playing .bars span:nth-child(5) { animation:bar .45s ease-in-out .05s infinite alternate; height:8px; }
+.player.playing .bars span:nth-child(6) { animation:bar .55s ease-in-out .25s infinite alternate; height:6px; }
+
+@keyframes bar { from { transform:scaleY(0.4); } to { transform:scaleY(1); } }
+
+.player .pbtn {
+  width:34px; height:34px; border-radius:50%;
+  background:rgba(255,255,255,0.06);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:11px;
+  transition:all .2s; flex-shrink:0;
+}
+
+.player .pbtn:hover { background:rgba(120,90,255,0.2); }
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:#06060a; }
+::-webkit-scrollbar-thumb { background:rgba(120,90,255,0.15); border-radius:2px; }
+
+/* ANIMATIONS */
+.reveal { opacity:0; transform:translateY(30px); transition:all .7s cubic-bezier(.22,.61,.36,1); }
+.reveal.in { opacity:1; transform:translateY(0); }
+.reveal[data-delay="1"] { transition-delay:.1s; }
+.reveal[data-delay="2"] { transition-delay:.2s; }
+.reveal[data-delay="3"] { transition-delay:.3s; }
+.reveal[data-delay="4"] { transition-delay:.4s; }
+.reveal[data-delay="5"] { transition-delay:.5s; }
+.reveal[data-delay="6"] { transition-delay:.6s; }
+.reveal[data-delay="7"] { transition-delay:.7s; }
+.reveal[data-delay="8"] { transition-delay:.8s; }
+
+.now-card { transition:all .35s cubic-bezier(.22,.61,.36,1); }
+.now-card:nth-child(2) { transition-delay:.12s; }
+
+.project { transition:all .3s cubic-bezier(.22,.61,.36,1); }
+.project:nth-child(1) { transition-delay:.05s; }
+.project:nth-child(2) { transition-delay:.1s; }
+.project:nth-child(3) { transition-delay:.15s; }
+.project:nth-child(4) { transition-delay:.2s; }
+.project:nth-child(5) { transition-delay:.25s; }
+.project:nth-child(6) { transition-delay:.3s; }
+.project:nth-child(7) { transition-delay:.35s; }
+.project:nth-child(8) { transition-delay:.4s; }
+
+.github-imgs img:nth-child(1) { transition-delay:.1s; }
+.github-imgs img:nth-child(2) { transition-delay:.25s; }
+
+.about-stats div { transition:all .5s cubic-bezier(.22,.61,.36,1); }
+.about-stats div:nth-child(1) { transition-delay:.05s; }
+.about-stats div:nth-child(2) { transition-delay:.15s; }
+.about-stats div:nth-child(3) { transition-delay:.25s; }
+.about-stats div:nth-child(4) { transition-delay:.35s; }
+
+@keyframes countUp {
+  from { opacity:0; transform:translateY(10px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+.count-me { animation:countUp .4s both; }
+
+.hl-line {
+  position:fixed; top:0; left:0;
+  width:0; height:2px;
+  background:linear-gradient(90deg,#785aff,#a78bfa);
+  z-index:101;
+  transition:width .1s linear;
+}
+
+/* RESPONSIVE */
+@media (max-width:768px) {
+  nav { padding:14px 20px; }
+  nav ul { display:none; }
+  .hero h1 { font-size:34px; }
+  section { padding:80px 20px; }
+  .about-wrap { grid-template-columns:1fr; gap:32px; }
+  .now-grid { grid-template-columns:1fr; }
+  .project { flex-direction:column; align-items:flex-start; gap:6px; }
+  .project .meta { width:100%; justify-content:flex-start; }
+  .player { bottom:14px; right:14px; }
+  .slideshow-wrap { aspect-ratio:4/3; }
+  .slideshow-wrap .s-nav { opacity:1; width:34px; height:34px; font-size:14px; }
+  .slideshow-wrap .s-nav.prev { left:10px; }
+  .slideshow-wrap .s-nav.next { right:10px; }
 }
 </style>
 </head>
-
 <body>
 
-<!-- CLOCK -->
-<div class="clock" id="clock">00:00:00</div>
+<nav>
+  <div class="logo"><span>✦</span> gambriel182</div>
+  <ul>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#now">Agora</a></li>
+    <li><a href="#gallery">Galeria</a></li>
+    <li><a href="#projects">Projetos</a></li>
+    <li><a href="#music">Música</a></li>
+  </ul>
+</nav>
 
-<div class="container">
-
-  <img class="pfp" src="profile.png" alt="profile">
-
-  <h1>gambriel182</h1>
-  <div class="tag">Vibe Coder • Arch Linux user • NexusPT</div>
-
-  <!-- SLIDESHOW -->
-  <div class="slideshow">
-
-  <img src="img1.png" class="active">
-  <img src="img2.png">
-  <img src="img3.png">
-
-  <!-- NAV ARROWS -->
-  <div class="nav left" onclick="prevSlide()">‹</div>
-  <div class="nav right" onclick="nextSlide()">›</div>
-
-  <!-- DOTS -->
-  <div class="dots">
-    <span class="dot active" onclick="goToSlide(0)"></span>
-    <span class="dot" onclick="goToSlide(1)"></span>
-    <span class="dot" onclick="goToSlide(2)"></span>
-    <span class="dot" onclick="goToSlide(3)"></span>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <img src="profile.png" alt="" class="hero-pfp">
+  <h1>gambriel<span>182</span></h1>
+  <p>Desenvolvedor, Arch Linux, co-fundador da NexusPT.</p>
+  <div class="btns">
+    <a href="https://github.com/gambriel182" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+    <a href="https://nexuspt.eu" target="_blank"><i class="fas fa-globe"></i> NexusPT</a>
+    <a href="#projects"><i class="fas fa-code"></i> Projetos</a>
   </div>
+</section>
 
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-wrap">
+      <div class="about-text reveal" data-delay="1">
+        <div class="section-label">Sobre</div>
+        <p>Sou desenvolvedor, usuário de <strong>Arch Linux</strong> e co-fundador da <strong>NexusPT</strong> — comunidade onde partilhamos conhecimento sobre programação, infraestrutura e ferramentas modernas.</p>
+        <p>Focado em Python, automação e projetos que unem utilidade e design. Acredito que bom código e bom ambiente caminham juntos.</p>
+      </div>
+      <div class="about-stats reveal" data-delay="2">
+        <div><span class="n" id="repoCount">-</span><span class="l">Repositórios</span></div>
+        <div><span class="n">NexusPT</span><span class="l">Co-fundador</span></div>
+        <div><span class="n">Arch</span><span class="l">Linux</span></div>
+        <div><span class="n">Vibe</span><span class="l">Coding</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NOW -->
+<section id="now">
+  <div class="section-inner">
+    <div class="section-label reveal" data-delay="1">Agora</div>
+    <div class="now-grid">
+      <div class="now-card reveal" data-delay="2">
+        <div class="now-logo"><img src="https://nexuspt.eu/favicon.ico" alt="NexusPT"></div>
+        <h3>NexusPT <small>comunidade</small></h3>
+        <p>A crescer a comunidade e a desenvolver soluções tecnológicas para programadores e empresas.</p>
+      </div>
+      <div class="now-card reveal" data-delay="3">
+        <div class="now-logo"><i class="fab fa-linux" style="font-size:22px;color:#fff"></i></div>
+        <h3>Arch Linux <small>daily driver</small></h3>
+        <p>Arch como sistema principal. A explorar automação, dashboards e personalização de ambiente.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY / SLIDESHOW -->
+<section id="gallery">
+  <div class="section-inner">
+    <div class="section-label reveal" data-delay="1">Galeria</div>
+    <div class="gallery-frame reveal" data-delay="2">
+      <div class="slideshow-wrap">
+        <div class="slides">
+          <img src="img1.png" class="active" alt="">
+          <img src="img2.png" alt="">
+          <img src="img3.png" alt="">
+          <img src="img4.png" alt="">
+        </div>
+        <div class="s-overlay"></div>
+        <div class="s-count" id="slideCount">1 / 4</div>
+        <div class="s-nav prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></div>
+        <div class="s-nav next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></div>
+        <div class="s-dots">
+          <span class="active" onclick="goSlide(0)"></span>
+          <span onclick="goSlide(1)"></span>
+          <span onclick="goSlide(2)"></span>
+          <span onclick="goSlide(3)"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-label reveal" data-delay="1">Projetos</div>
+    <div class="reveal" data-delay="2">
+      <div class="projects" id="projectsList">
+        <div style="padding:24px;text-align:center;color:#444;font-size:13px">Carregando...</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GITHUB -->
+<section id="github">
+  <div class="section-inner">
+    <div class="section-label reveal" data-delay="1">GitHub</div>
+    <div class="github-imgs reveal" data-delay="2">
+      <img src="https://github-readme-stats.vercel.app/api?username=gambriel182&show_icons=true&theme=dark&hide_border=true&bg_color=06060a&title_color=785aff&icon_color=785aff&text_color=444" alt="">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=gambriel182&layout=compact&theme=dark&hide_border=true&bg_color=06060a&title_color=785aff&text_color=444" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- MUSIC -->
+<section id="music">
+  <div class="section-inner">
+    <div class="section-label reveal" data-delay="1">Música</div>
+    <div class="reveal" data-delay="2" style="display:flex;flex-direction:column;align-items:center">
+      <div class="music-card">
+        <div class="head"><i class="fab fa-spotify"></i> No Spotify</div>
+        <iframe src="https://open.spotify.com/embed/track/4cG7HUWYHBV6R6tHn1gxrl" width="100%" height="152" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAYER -->
+<div class="player" id="player" onclick="togglePlay()">
+  <div class="info">
+    <span class="name">Friday</span>
+    <span class="artist">gambriel182</span>
+  </div>
+  <div class="bars">
+    <span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="pbtn" id="playBtn"><i class="fas fa-play"></i></div>
 </div>
 
-  <!-- LINKS -->
-  <div class="links">
-
-    <a href="https://github.com/gambriel182">
-      <img class="icon"
-        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
-        style="filter: invert(1);">
-      GitHub
-    </a>
-
-    <a href="https://nexuspt.eu">
-      <img class="icon" src="https://nexuspt.eu/favicon.ico">
-      NexusPT Website
-    </a>
-
-    <a href="https://github.com/caelestia-dots/caelestia">
-      <img class="icon"
-        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
-        style="filter: invert(1);">
-      Dotfiles I use on Arch Linux
-    </a>
-
-  </div>
-
-  <!-- SPOTIFY -->
-  <div class="spotify">
-    <iframe
-      style="border-radius:12px"
-      src="https://open.spotify.com/embed/track/4cG7HUWYHBV6R6tHn1gxrl"
-      width="100%" height="152"
-      frameborder="0"
-      allowfullscreen=""
-      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-    </iframe>
-  </div>
-
-  <div class="status">
-    Software developer • Arch Linux • Building cool projects
-  </div>
-
-</div>
-
-<!-- AUDIO -->
-<audio id="bg" autoplay loop>
+<audio id="bgMusic" loop preload="metadata">
   <source src="friday.mp3" type="audio/mpeg">
 </audio>
 
-<script>
-/* CLOCK */
-function updateClock() {
-  const now = new Date();
-  const time = now.toLocaleTimeString('en-GB', { hour12: false });
-  document.getElementById('clock').innerText = time;
-}
-setInterval(updateClock, 1000);
-updateClock();
+<footer>
+  <div class="social">
+    <a href="https://github.com/gambriel182" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+    <a href="https://nexuspt.eu" target="_blank" aria-label="NexusPT"><i class="fas fa-globe"></i></a>
+    <a href="https://github.com/caelestia-dots/caelestia" target="_blank" aria-label="Dotfiles"><i class="fab fa-linux"></i></a>
+  </div>
+  <p>&copy; 2026 gambriel182</p>
+</footer>
 
-/* MUSIC */
-const bg = document.getElementById("bg");
-window.addEventListener("load", () => {
-  bg.volume = 0.2;
-  bg.play().catch(() => {});
+<script>
+// ── SCROLL PROGRESS ──
+const hl = document.createElement('div');
+hl.className = 'hl-line';
+document.body.prepend(hl);
+
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  hl.style.width = Math.min(window.scrollY / h * 100, 100) + '%';
 });
 
-const slides = document.querySelectorAll(".slideshow img");
-const dots = document.querySelectorAll(".dot");
+// ── REVEAL ──
+document.addEventListener('DOMContentLoaded', () => {
+  const obs = new IntersectionObserver(e => {
+    e.forEach(x => {
+      if (x.isIntersecting) {
+        x.target.classList.add('in');
+        // count-up nos .n dentro da secao
+        const nums = x.target.querySelectorAll('.n[data-count]');
+        nums.forEach(n => { n.textContent = n.dataset.count; n.style.opacity = '1'; });
+      }
+    });
+  }, { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+});
 
-let index = 0;
-let interval = null;
+// ── GITHUB API ──
+const GITHUB_USER = 'gambriel182';
+const EXCLUDED = ['gambriel182.github.io'];
+
+async function fetchAllRepos(page = 1, acc = []) {
+  const res = await fetch(`https://api.github.com/users/${GITHUB_USER}/repos?sort=updated&per_page=100&page=${page}`);
+  const data = await res.json();
+  if (!Array.isArray(data) || data.length === 0) return acc;
+  const all = acc.concat(data);
+  const link = res.headers.get('Link');
+  if (link && link.includes('rel="next"')) return fetchAllRepos(page + 1, all);
+  return all;
+}
+
+async function loadGitHub() {
+  try {
+    document.getElementById('projectsList').innerHTML = '<div style="padding:24px;text-align:center;color:#444;font-size:13px">Carregando...</div>';
+
+    const repos = await fetchAllRepos();
+
+    document.getElementById('repoCount').textContent = repos.length;
+
+    const list = document.getElementById('projectsList');
+    list.innerHTML = '';
+
+    const filtered = repos.filter(r => !EXCLUDED.includes(r.name));
+
+    if (filtered.length === 0) {
+      list.innerHTML = '<div style="padding:24px;text-align:center;color:#555;font-size:13px">Nenhum repositório encontrado</div>';
+      return;
+    }
+
+    filtered.forEach((repo, i) => {
+      const a = document.createElement('a');
+      a.className = 'project reveal';
+      a.dataset.delay = Math.min(i + 1, 8);
+      a.href = repo.html_url;
+      a.target = '_blank';
+      a.innerHTML = `
+        <div class="info">
+          <h4>${repo.name}</h4>
+          <p>${repo.description || ''}</p>
+        </div>
+        <div class="meta">
+          <span class="lang">${repo.language || '—'}</span>
+          <span class="arrow"><i class="fas fa-arrow-up-right-from-square"></i></span>
+        </div>
+      `;
+      list.appendChild(a);
+    });
+
+    const obs2 = new IntersectionObserver(e => {
+      e.forEach(x => { if (x.isIntersecting) x.target.classList.add('in'); });
+    }, { threshold:0.08, rootMargin:'0px 0px -20px 0px' });
+    document.querySelectorAll('#projectsList .reveal').forEach(el => obs2.observe(el));
+  } catch (err) {
+    document.getElementById('projectsList').innerHTML = '<div style="padding:24px;text-align:center;color:#555;font-size:13px">Erro ao carregar repositórios</div>';
+  }
+}
+
+loadGitHub();
+
+// ── SLIDESHOW ──
+let slideIdx = 0;
+const slides = document.querySelectorAll('.slideshow-wrap .slides img');
+const sdots = document.querySelectorAll('.slideshow-wrap .s-dots span');
+const sCount = document.getElementById('slideCount');
+let slInt;
 
 function showSlide(i) {
   slides.forEach((s, idx) => {
-    s.classList.toggle("active", idx === i);
-    dots[idx].classList.toggle("active", idx === i);
+    s.classList.toggle('active', idx === i);
+    if (sdots[idx]) sdots[idx].classList.toggle('active', idx === i);
   });
-  index = i;
+  slideIdx = i;
+  if (sCount) sCount.textContent = `${i + 1} / ${slides.length}`;
 }
 
-function nextSlide() {
-  let next = (index + 1) % slides.length;
-  showSlide(next);
-}
+function nextSlide() { showSlide((slideIdx + 1) % slides.length); resetAuto(); }
+function prevSlide() { showSlide((slideIdx - 1 + slides.length) % slides.length); resetAuto(); }
+function goSlide(i) { showSlide(i); resetAuto(); }
 
-function prevSlide() {
-  let prev = (index - 1 + slides.length) % slides.length;
-  showSlide(prev);
-}
+function startAuto() { slInt = setInterval(nextSlide, 4500); }
+function resetAuto() { clearInterval(slInt); startAuto(); }
 
-function goToSlide(i) {
-  showSlide(i);
-  resetAutoplay();
-}
-
-/* autoplay */
-function startAutoplay() {
-  interval = setInterval(nextSlide, 3500);
-}
-
-function resetAutoplay() {
-  clearInterval(interval);
-  startAutoplay();
-}
-
-/* init */
 showSlide(0);
-startAutoplay();
+startAuto();
 
-/* expose for HTML clicks */
 window.nextSlide = nextSlide;
 window.prevSlide = prevSlide;
-window.goToSlide = goToSlide;
+window.goSlide = goSlide;
+
+// ── PLAYER ──
+const bgMusic = document.getElementById('bgMusic');
+const player = document.getElementById('player');
+const playBtn = document.getElementById('playBtn');
+let playing = false;
+
+function togglePlay() {
+  if (playing) {
+    bgMusic.pause();
+    playBtn.innerHTML = '<i class="fas fa-play"></i>';
+    player.classList.remove('playing');
+  } else {
+    bgMusic.play().catch(() => {});
+    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    player.classList.add('playing');
+  }
+  playing = !playing;
+}
+
+bgMusic.addEventListener('ended', () => {
+  playing = false;
+  playBtn.innerHTML = '<i class="fas fa-play"></i>';
+  player.classList.remove('playing');
+});
 </script>
 
 </body>
